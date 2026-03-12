@@ -1,0 +1,4 @@
+body { font-family: Arial, sans-serif; margin: 20px; }
+h1, h2 { color: #2c3e50; }
+#ai-signals div { border:1px solid #ccc; padding:10px; margin:10px; }
+#telegram-post { border:1px solid #f39c12; padding:10px; margin:10px; background:#fff8e1; }
