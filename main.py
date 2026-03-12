@@ -4,13 +4,13 @@ import json, os
 
 app = FastAPI()
 
-# Картинки сигналов
 signals_dir = os.path.join(os.getcwd(), "signals_data")
+frontend_dir = os.path.join(os.getcwd(), "frontend")
+
+# Статические файлы: скриншоты и звук
 if os.path.exists(signals_dir):
     app.mount("/tradingview_images", StaticFiles(directory=signals_dir), name="images")
 
-# Звук
-frontend_dir = os.path.join(os.getcwd(), "frontend")
 if os.path.exists(os.path.join(frontend_dir, "alert.mp3")):
     app.mount("/sounds", StaticFiles(directory=frontend_dir), name="sounds")
 
