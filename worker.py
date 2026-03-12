@@ -1,7 +1,5 @@
-import json, time, os, random
+import os, json, time, random
 from datetime import datetime
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import yfinance as yf
 
 PAIRS = [
@@ -12,16 +10,16 @@ PAIRS = [
 ]
 
 SIGNALS_JSON = "signals_data/signals.json"
+SIGNALS_DIR = "signals_data"
 
-if not os.path.exists("signals_data"):
-    os.makedirs("signals_data")
+if not os.path.exists(SIGNALS_DIR):
+    os.makedirs(SIGNALS_DIR)
 
-# Placeholder для изображений
-PLACEHOLDER = "signals_data/placeholder.png"
+PLACEHOLDER = os.path.join(SIGNALS_DIR, "placeholder.png")  # можно один PNG для всех пар
 
-def get_ohlcv(pair, interval="1h", period="30d"):
+def get_ohlcv(pair):
     ticker = pair.replace("/", "") + "=X"
-    df = yf.download(ticker, interval=interval, period=period)
+    df = yf.download(ticker, interval="1h", period="30d")
     return df
 
 def analyze_signal(df):
@@ -31,21 +29,18 @@ def analyze_signal(df):
     else:
         return "Снятие ликвидности", random.randint(60, 80)
 
-def screenshot_tradingview(pair, timeframe="1H"):
-    # Простейший скрин placeholder
-    path = f"signals_data/{pair}_{timeframe}.png"
-    if not os.path.exists(path):
-        if os.path.exists(PLACEHOLDER):
-            import shutil
-            shutil.copyfile(PLACEHOLDER, path)
-    return path
+def screenshot_placeholder(pair):
+    path = os.path.join(SIGNALS_DIR, f"{pair}_1H.png")
+    if not os.path.exists(path) and os.path.exists(PLACEHOLDER):
+        import shutil
+        shutil.copyfile(PLACEHOLDER, path)
 
 def generate_signals():
     signals = []
     for pair in PAIRS:
         df = get_ohlcv(pair)
         desc, prob = analyze_signal(df)
-        screenshot_tradingview(pair)
+        screenshot_placeholder(pair)
         signals.append({
             "pair": pair,
             "timeframe": "1H",
@@ -58,7 +53,7 @@ def generate_signals():
     with open(SIGNALS_JSON, "w", encoding="utf-8") as f:
         json.dump(signals, f, ensure_ascii=False, indent=2)
 
-# Авто-обновление каждые 5 минут
+# Обновление каждые 5 минут
 while True:
     generate_signals()
     print(f"[{datetime.now()}] Signals updated")
