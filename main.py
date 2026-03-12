@@ -6,6 +6,7 @@ app = FastAPI()
 
 # Статика для картинок
 app.mount("/tradingview_images", StaticFiles(directory="signals_data"), name="images")
+app.mount("/sounds", StaticFiles(directory="frontend"), name="sounds")
 
 PAIRS = [
     "EURUSD","GBPUSD","USDJPY","AUDUSD","USDCAD","USDCHF","NZDUSD",
@@ -15,15 +16,20 @@ PAIRS = [
 ]
 
 def generate_ai_signal(pair):
-    prob = random.randint(60, 90)
-    status = "active" if prob > 65 else "inactive"
+    probability = random.randint(60, 90)
+    status = "active" if probability > 65 else "inactive"
+    description = f"AI сигнал для {pair}: ордерблоки, FVG, дивергенции"
+    image_url = f"https://ai-forex-signal-platform.onrender.com/tradingview_images/{pair}_1H.png"
+    # добавляем ссылку на звук
+    sound_url = f"https://ai-forex-signal-platform.onrender.com/sounds/alert.mp3"
     return {
         "pair": pair,
         "timeframe": "1H",
-        "probability": prob,
+        "probability": probability,
         "status": status,
-        "description": f"Прототип AI сигнал для {pair}: ордерблоки, FVG, дивергенции",
-        "image_url": f"https://ai-forex-signal-platform.onrender.com/tradingview_images/{pair}_1H.png"
+        "description": description,
+        "image_url": image_url,
+        "sound_url": sound_url
     }
 
 @app.get("/ai_signals")
@@ -32,4 +38,4 @@ def get_ai_signals():
 
 @app.get("/")
 def root():
-    return {"status": "server_running"}
+    return {"status":"server_running"}
