@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000"; // заменим на Railway позже
+const API_BASE = "http://ai-forex-signal-platform.up.railway.app"; // заменим на Railway позже
 
 let totalSignals = 0;
 let inProfit = 0;
