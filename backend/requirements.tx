@@ -1,6 +1,2 @@
-fastapi
-uvicorn
-pandas
-numpy
-scikit-learn
-telethon
+fastapi==0.111.0
+uvicorn==0.23.2
