@@ -1,9 +1,9 @@
 fetch("/ai_signals")
 .then(res=>res.json())
 .then(signals=>{
-  const container = document.getElementById("signals-container");
+  const container=document.getElementById("signals-container");
   signals.forEach((sig,index)=>{
-    const card = document.createElement("div");
+    const card=document.createElement("div");
     card.className="signal-card fade-in";
     card.style.animationDelay=`${index*0.05}s`;
     card.innerHTML=`
