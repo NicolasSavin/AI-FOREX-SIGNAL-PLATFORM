@@ -1,29 +1,45 @@
-body { font-family: Arial, sans-serif; margin: 20px; }
-h1, h2 { color: #2c3e50; }
+body {
+  background: #121212;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
 
-.signal-card, .telegram-post {
-    border:1px solid #ccc; 
-    padding:10px; 
-    margin:10px;
-    border-radius:5px;
-    transition: transform 0.3s;
+#signals-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.signal-card {
+  border: 2px solid #444;
+  border-radius: 10px;
+  padding: 15px;
+  width: 300px;
+  background-color: #1e1e1e;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.signal-card img {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .signal-card:hover {
-    transform: scale(1.02);
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
 }
-
-/* Анимация мигания */
-@keyframes pulse {
-    0% { background-color: #fff; }
-    50% { background-color: #d1f0d1; }
-    100% { background-color: #fff; }
-}
-
-.telegram-post {
-    border:1px solid #f39c12; 
-    background:#fff8e1;
-}
-
-/* Статистика внизу */
-#stats { font-size:12px; color:#555; }
