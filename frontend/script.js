@@ -5,7 +5,7 @@ fetch("https://ai-forex-signal-platform.onrender.com/ai_signals")
     signals.forEach((sig, index) => {
       const card = document.createElement("div");
       card.className = "signal-card fade-in";
-      card.style.animationDelay = `${index * 0.05}s`; // небольшая задержка анимации
+      card.style.animationDelay = `${index * 0.05}s`;
       card.innerHTML = `
         <h3>${sig.pair} (${sig.timeframe})</h3>
         <p>Вероятность: ${sig.probability}%</p>
