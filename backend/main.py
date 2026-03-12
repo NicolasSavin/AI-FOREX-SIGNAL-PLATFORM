@@ -1,35 +1,29 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
-from ai_signals import AISignalEngine
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
+# Главная страница для проверки сервера
+@app.get("/")
+def root():
+    return {"status": "server running"}
 
-ai_engine = AISignalEngine()
-
+# Endpoint с тестовыми AI-сигналами
 @app.get("/ai_signals")
-def get_ai_signals():
-    # Генерация тестовых данных свечей
-    df = pd.DataFrame({
-        'timestamp': pd.date_range('2026-01-01', periods=50, freq='H'),
-        'open': np.random.random(50),
-        'high': np.random.random(50)+1,
-        'low': np.random.random(50),
-        'close': np.random.random(50)
-    })
-    prob = ai_engine.predict(df)
-    signal_card = {
-        "pair": "EURUSD",
-        "timeframe": "1H",
-        "probability": round(prob*100,2),
-        "status": "active",
-        "description": "SMC + OB + Divergence + FVG"
-    }
-    return [signal_card]
+def ai_signals():
+    # Минимальный тестовый сигнал
+    return [
+        {
+            "pair": "EURUSD",
+            "timeframe": "1H",
+            "probability": 75,
+            "status": "active",
+            "description": "Test signal"
+        },
+        {
+            "pair": "GBPUSD",
+            "timeframe": "4H",
+            "probability": 65,
+            "status": "active",
+            "description": "Test signal"
+        }
+    ]
