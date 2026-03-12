@@ -1,4 +1,4 @@
-const API_BASE = "http://ai-forex-signal-platform.up.railway.app"; // заменим на Railway позже
+const API_BASE = const API_BASE = "https://ai-forex-signal-platform.railway.app"; // заменим на Railway позже
 
 let totalSignals = 0;
 let inProfit = 0;
